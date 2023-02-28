@@ -157,4 +157,5 @@ cython_debug/
 
 ## User Add
 .idea/
-WorkSpace/
+# WorkSpace/
+*.pdf

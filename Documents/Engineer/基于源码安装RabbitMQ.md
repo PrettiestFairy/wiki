@@ -1,12 +1,12 @@
-# 基于ARM架构服务器安装RabbitMQ
+# 基于源码安装RabbitMQ
 
 ## 一.环境说明
 
 | 名称      | 版本号  | 下载地址                                                     |
 | --------- | ------- | ------------------------------------------------------------ |
-| Erlang    | 25.2.3  | http://alicefairy.ysepan.com/ [WorkSpace/成都润联科技开发有限公司/otp_src_25.2.3.tar.gz] |
-| RabbitMQ  | 3.11.9  | http://alicefairy.ysepan.com/ [WorkSpace/成都润联科技开发有限公司/rabbitmq-server-generic-unix-3.11.9.tar.xz] |
-| wxWidgets | 3.2.2.1 | http://alicefairy.ysepan.com/ [WorkSpace/成都润联科技开发有限公司/wxWidgets-3.2.2.1.tar.bz2] |
+| Erlang    | 25.2.3  | https://github.com/erlang/otp/releases/download/OTP-25.2.3/otp_src_25.2.3.tar.gz |
+| RabbitMQ  | 3.11.9  | https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.11.9/rabbitmq-server-generic-unix-3.11.9.tar.xz |
+| wxWidgets | 3.2.2.1 | https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.2.1/wxWidgets-3.2.2.1.tar.bz2 |
 
 
 
@@ -36,8 +36,6 @@ sudo make -j 4 && sudo make install
 
 ## 四. 安装Erlang
 
-​	
-
 ```shell
 # 解压erlang到/usr/local/otp_src_25.2.3
 sudo tar -zxvf otp_src_25.2.3.tar.gz -C /usr/local/
@@ -65,7 +63,7 @@ tar -xvf rabbitmq-server-generic-unix-3.11.9.tar.xz
 sudo mv rabbitmq_server-3.11.9 /usr/local/rabbitmq
 # 将rabbitmq加入环境变量，并使之生效（无需进入目录即可执行）
 echo 'export PATH=$PATH:/usr/local/rabbitmq/sbin' | sudo tee -a /etc/profile
-sudo source /etc/profile
+source /etc/profile
 ```
 
 ## 六.启动RabbitMQ

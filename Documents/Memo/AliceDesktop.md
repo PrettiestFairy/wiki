@@ -53,3 +53,13 @@
 ### Apifox
 
 > Mock: 4523
+
+## 用户密码
+
+### DMZ
+
+> root: Yqm:,U8oHijnBv*
+> alice: XZsRtJXGRxhR{K9>^]9z
+
+
+

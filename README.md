@@ -1,2 +1,1 @@
-# AliceEngineerProTypora
-AliceEngineerProTypora
+# Typora

@@ -94,7 +94,3 @@ rabbitmqctl set_user_tags superadmin administrator
 # 重启rabbitmq
 rabbitmqctl stop && rabbitmq-server -detached
 ```
-
-## 八.登录验证
-
-![image-20230228215822717](./static/images/image-20230228215822717.png)

@@ -1,0 +1,113 @@
+1.Docker的基础管理
+
+安装docker的准备工作
+参考文档>>>https://yeasy.gitbook.io/docker_practice/
+DockerHub官网>>>https://hub.docker.com/
+• 升级centos的yum源
+sudo yum update
+• 设置yum源
+官方源>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+三方源>sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+• 安装依赖包
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+• 安装docker
+sudo yum install docker-ce docker-ce-cli containerd.io
+docker镜像加速
+参考文档>>>https://www.cnblogs.com/nhdlb/p/12567154.html
+cd /etc/docker
+vi daemon.json
+修改daemon.json文件
+{
+	"registry-mirrors": ["https://hub-mirror.c.163.com","https://mirror.baidubce.com"]
+}
+docker的启动,重启,停止,查看运行状态
+• 启动>>systemctl start docker
+• 重启>>systemctl restart docker
+• 停止>>systemctl stop docker
+• 状态>>systemctl status docker
+验证是否安装成功:(有Client和Server表示安装启动成功)
+>>docker version
+docker镜像
+docker search>查询(centos)镜像>>docker search centos
+• 下载镜像
+docker pull [选项] [Docker Registry 地址[:端口号]/]仓库名[:标签]
+docker pull>下载镜像>>docker pull centos:7
+• 查看镜像
+docker image ls    或者    docker images
+更详细的查看>>docker image ls --no-trunc
+查询某个镜像>>docker image inspect [Repository:Tag    或    Image ID]
+只查看镜像ID>>docker images -q
+• 镜像的导入导出
+导出>>docker image save [Repository:Tag    或    Image ID] > /opt/[Repository].tar.gz
+导出>>docker image load -i /opt/[Repository].tar.gz
+改名>>docker image tag [Image ID] [Repository:Tag]
+• 镜像的删除(谨慎使用)
+删除>>docker image rm -f [image ID]    (-f 表示强制删除)
+删除全部>> docker image rm -f `docker image ls -q`    (docker image ls -q, 表示查看全部镜像)
+docker容器以及管理
+交互式容器
+• 运行容器
+运行>>docker container run -it [Image ID]
+• 查看容器
+查看>>docker container ls
+>>Container ID: 容器的唯一ID(默认自动生成)
+>>Image: 容器对应的镜像ID
+>>Command:启动容器时的命令
+>>Created:容器启动时间
+>>Status:容器运行状态(Up为正在运行,Exited表示未运行)
+>>Ports:容器的端口号
+>>Names:容器名称
+自定义一个容器名称>>docker container run -it --name='new_centos7' [image ID]
+守护式容器
+• 运行容器
+运行>>docker run -d --name='nginx' [Image ID]
+• 查看容器
+查看>>docker container inspect [Container Name    或    Container ID]
+并验证能否访问
+容器的应用场景
+• 交互式容器(工具类):开发,测试,临时性的任务等
+容器退出交互式shell后自动删除容器>>docker container run -it --name='centos7' --rm [Image ID]
+• 守护式容器(服务类):网络维护SSH,
+暴露端口运行>>docker run -d -p 8080:80 --name='nginx' [Image ID]
+8080端口为自己设置的转发端口号
+80为nginx代理的http端口
+8080:80映射转发端口号,在任意设备上都可访问
+• 对于已有容器的启动,关闭,连接
+启动>>docker container start [-i] (交互式) [Container ID]
+停止>>docker container stop [Container ID]
+连接>>docker container attach [交互式镜像Container ID]
+>>docker container exec -it [交互式子进程Container ID] /bin/bash    在已有工作容器中生成子进程登录,可做调试,也不会影响原有容器的运行
+容器的网络访问
+• 指定映射(默认tcp)
+>>docker run -d -p 8080:80 --name='nginx' [Image ID]
+>>docker run -d -p 192.168.1.1:8081:80 --name='nginx' [Image ID] 对应网段固定端口号
+• 随机映射(默认tcp)
+>>docker run -d -p 80 --name='nginx' [Image ID]
+>>docker run -d -p 192.168.1.1::80 --name='nginx' [Iamge ID]对应网段端口号随机
+容器的其他管理
+只看ID>>docker Image ls -aq    docker container ls -aq 等
+看logs>>docker container logs [Container ID]  显示日志信息
+>docker container logs -t [-tf] [Container ID]  显示更详细的日志信息(时间戳)
+总结:
+1,镜像类
+docker image
+search查(是否有docker镜像)
+pull下载
+ls查询(已下载的)
+inspect详细信息
+rm删除
+save导出
+load导入
+2,容器类
+docker container
+run运行
+start启动
+stop停止
+restart重启
+kill杀死
+inspect详细信息
+exec用/bin/bash进入容器
+attach进入容器
+ls查看
+top查看
+logs查看日志

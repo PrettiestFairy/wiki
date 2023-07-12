@@ -44,9 +44,3 @@ sudo firewall-cmd --reload
 # redis的关闭
 kill -9 `ps -ef | grep -v grep | grep redis | awk '{print $2}'`
 ```
-
-## 四.验证
-
-![image-20230228234803305](./static/images/image-20230228234803305.png)
-
-![image-20230228234732379](./static/images/image-20230228234732379.png)

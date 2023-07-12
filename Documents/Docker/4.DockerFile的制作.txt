@@ -1,0 +1,28 @@
+1.dockerfile 的基本使用
+>>mkdir -p /opt/dockerfile/centos6.9_file
+>>vi /opt/docekrfile/centos6.9_file/dockerfile
+
+2.dockerfile文件
+FROM 基础镜像
+必须以FROM开头
+	#FROM 语法
+	#FROM REPOSITORY:Tag  一般
+	#FROM REPOSITORY@ImageID  Hash校验
+RUN 构建镜像过程中用到的命令
+EXPOSE 暴露端口
+CMD 使用镜像启动容器用到的命令
+ADD 添加文件,tar格式的直接解压,也可以更url
+COPY 复制文件
+ENV 添加变量
+	用法:
+		ENV CODE_DIR /var/www/html
+		COPY project.tar.gz ${CODE_DIR}
+VOLUME 数据卷挂载
+ENTRYPOINT 在容器启动时,第一进程被手工输入的命令替换的,防止容器秒开秒关
+
+
+3.构建镜像  
+>>docker image build -t "image name" /dockerfile的目录
+* 是目录不是文件
+
+4.Dockerfile命令

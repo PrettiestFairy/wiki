@@ -1,0 +1,4 @@
+mysql的用户管理
+
+mysq>>grant all on *.* to root@'%' identified by 'root';
+mysq>>grant all on *.* to discuss@'%' identified by '123';

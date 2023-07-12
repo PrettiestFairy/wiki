@@ -1,0 +1,13 @@
+# Centos6.9_SSHD_LAMP
+FROM docker.io/centos:6.9
+RUN mkdir /etc/yum.repos.d/bak && mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/bak && echo -e "[ftp]\nname = ftpbase\nbaseurl = ftp://172.17.0.1/centos6.9\nenabled = 1\ngpgcheck = 0" > /etc/yum.repos.d/ftp_centos6.9.repo && yum clean all && yum makecache && yum install -y openssh-server httpd mysql mysql-server php php-mysql
+RUN echo "root" | passwd root --stdin && /etc/init.d/sshd start && /etc/init.d/mysqld start && /etc/init.d/httpd start 
+# RUN "mysql -e "grant all on *.* to root@'%' identified by 'root'; grant all on *.* to discuss@'%' identified by '123'; create database discuss charset utf8;"
+COPY index.php /tmp
+COPY init.sh /
+ADD bbs.tar.gz /var/www/html
+# ADD https://vip.d0.baidupan.com/file/?AGZaZA8+BTQHDgc/V2JdMVplU2sHPlE6BW5XNAFzVCEEfAckWSIDMVZpVG4DMlwCBzRVNFMxAzUBMFtlUzZabgAwWj4PagV3BzcHIlc+XWpaJlMmByhRbgUwV2EBb1RkBCsHYFkzA3hWMFQzA3hcOQduVWVTbgMxAWdbZFM9WmgANFo7D2sFMgc0B2RXYF1sWjVTYAc6UTUFZlcyAThUYgQzB2BZMwNgVmRUZgNnXHMHKVUoU3gDJwFzWy5TalopAGlaaQ9vBWAHYQdmVzRdbFo5U2MHflEnBWtXPAE4VDMEOQdhWTIDZVY2VDoDYFxuB2VVaFM0Ay8BIFsoU39aZgAxWiMPdAU3Bz0HJlc+XW1aNlNkB21RYgUzV2cBbVRmBDEHdllxAydWd1Q/A2ZcawdvVWVTPQMwATBbbVM+WmgAJlp4DzsFIQdsB2NXMV1uWi5TZAdpUWEFLFdjAXNUZAQ9B2k= /tmp
+EXPOSE 22
+EXPOSE 80
+EXPOSE 3306
+CMD ["/bin/bash","/init.sh"]

@@ -28,7 +28,7 @@ sudo vim /etc/apt/apt.conf.d/20auto-upgrades
 ```yaml
 network:
   ethernets:
-    ens160:
+    ens33:
       addresses:
       - 192.168.254.128/24
       gateway4: 192.168.254.10

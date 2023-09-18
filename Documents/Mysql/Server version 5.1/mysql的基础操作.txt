@@ -1,4 +1,0 @@
-mysql的基础操作
-
-mysqlde 建库
-mysql>>create database discuss charset utf8;

@@ -1,0 +1,16 @@
+{% set server_name = nginx_server_name %}
+{% set http_port = nginx_http_port %}
+
+upstream web {
+{% for host in groups['testserver'] %}
+    server {{ hostvars[host].inventory_hostname }}
+{% endfor %}
+}
+
+server {
+    listen {{ http_port }};
+    server_name {{ server_name }};
+    location / {
+        root /usr/share/nginx/html
+    }
+}
